@@ -15,7 +15,6 @@ public class Combat : MonoBehaviour, IAnimatorController
     private bool atkCombo03;
     private bool atkJump;
 
-    private float hitMargin = 0.07f;
     #endregion
     AnimatorClipInfo[] clipInfos;
 

@@ -4,33 +4,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour, IAnimatorController
+public class Movement : Character, IAnimatorController
 {
-    private SpriteRenderer spriteRenderer;
-    private Animator movementAnimator;
-    private Rigidbody2D rigidbody;
-
-    static Vector2 LimitY = new Vector2(0.039f, -0.841f);
-
-    private float axisY;
+    public float axisY;
     private float jumpForce = 210;
     private float xspeed = 1f;
     private float yspeed = .8f;
-    private float horizontal;
-    private float vertical;
+
     #region Animator Controllers
     private bool walking;
     private bool isJumping;
+    private bool atkJump;
+    private bool atkCombo01;
     #endregion
 
     private AnimatorClipInfo[] clipInfos;
 
-    void Start()
+
+    void Awake()
     {
+        rigidbody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        movementAnimator = GetComponent<Animator>();
-        rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.Sleep();
+        animator = GetComponent<Animator>();
+        rigidbody2D.Sleep();
     }
 
     // Update is called once per frame
@@ -38,19 +34,36 @@ public class Movement : MonoBehaviour, IAnimatorController
     {
         AnimatorControllerInit();
         CheckAxis();
-
-        if (!clipInfos[0].clip.name.Contains("atk"))
-            MovementControl();
-
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("blaze_get_hit"))
+        {
+            if (!clipInfos[0].clip.name.Contains("atk"))
+                MovementControl();
+            
+            AttackControll();
+        }
         LimitsControl();
         LayerControl();
         OrientationControl();
         AnimatorControllerUpdate();
     }
 
+    private void AttackControll()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (animator.GetBool("Jumping") || Input.GetKeyDown(KeyCode.Space))
+            {
+                atkJump = true;
+            }
+
+            else
+                atkCombo01 = true;
+        }
+    }
+
     private void LimitsControl()
     {
-        if(!isJumping)
+        if (!isJumping)
             transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, LimitY.y, LimitY.x), 0.0f);
     }
 
@@ -75,14 +88,14 @@ public class Movement : MonoBehaviour, IAnimatorController
 
         if (!isJumping)
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 axisY = transform.position.y;
                 isJumping = true;
-                rigidbody.gravityScale = 1.5f;
-                rigidbody.WakeUp();
-                rigidbody.AddForce(new Vector2(0, jumpForce));
-                movementAnimator.SetBool("Jumping", isJumping);
+                rigidbody2D.gravityScale = 1.5f;
+                rigidbody2D.WakeUp();
+                rigidbody2D.AddForce(new Vector2(0, jumpForce));
+                animator.SetBool("Jumping", isJumping);
             }
 
             Vector3 movimento = new Vector3(horizontal * xspeed, vertical * yspeed, 0.0f);
@@ -91,7 +104,7 @@ public class Movement : MonoBehaviour, IAnimatorController
             if (horizontal != 0 || vertical != 0)
                 walking = true;
         }
-        
+
         else
         {
             Vector3 movimento = new Vector3(horizontal * xspeed, this.transform.position.y, 0.0f);
@@ -100,7 +113,7 @@ public class Movement : MonoBehaviour, IAnimatorController
     }
     private void LayerControl()
     {
-        if(!isJumping)
+        if (!isJumping)
             spriteRenderer.sortingOrder = -(int)(transform.position.y * 100) + 1;
         else
             spriteRenderer.sortingOrder = -(int)(axisY * 100) + 1;
@@ -108,13 +121,17 @@ public class Movement : MonoBehaviour, IAnimatorController
 
     public void AnimatorControllerInit()
     {
-        clipInfos = movementAnimator.GetCurrentAnimatorClipInfo(0);
+        clipInfos = animator.GetCurrentAnimatorClipInfo(0);
         walking = false;
+        atkJump = false;
+        atkCombo01 = false;
     }
 
     public void AnimatorControllerUpdate()
     {
-        movementAnimator.SetBool("Walking", walking);
+        animator.SetBool("Walking", walking);
+        animator.SetBool("Atk_Combo_01", atkCombo01);
+        animator.SetBool("Atk_Jump", atkJump);
     }
 
     public void OnLanding()
@@ -125,9 +142,14 @@ public class Movement : MonoBehaviour, IAnimatorController
             axisY = transform.position.y;
 
         isJumping = false;
-        rigidbody.gravityScale = 0.0f;
-        rigidbody.Sleep();
-        
-        movementAnimator.SetBool("Jumping", isJumping);
+        rigidbody2D.gravityScale = 0.0f;
+        rigidbody2D.Sleep();
+
+        animator.SetBool("Jumping", isJumping);
+    }
+
+    protected override IEnumerator Attack()
+    {
+        throw new NotImplementedException();
     }
 }
