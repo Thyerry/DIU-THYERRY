@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: blaze_down
+  m_Name: galsia_down
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,11 +20,11 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 3539361693305037480, guid: bee0b95a4439ad641977c9128e92584b, type: 3}
+      value: {fileID: 565972692302974791, guid: 16adf9b5140cc8c41b63330371462404, type: 3}
     - time: 0.25
-      value: {fileID: 553048268246006339, guid: bee0b95a4439ad641977c9128e92584b, type: 3}
-    - time: 0.6666667
-      value: {fileID: 553048268246006339, guid: bee0b95a4439ad641977c9128e92584b, type: 3}
+      value: {fileID: -457471454030017301, guid: 16adf9b5140cc8c41b63330371462404, type: 3}
+    - time: 0.5833333
+      value: {fileID: -457471454030017301, guid: 16adf9b5140cc8c41b63330371462404, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,15 +44,15 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 3539361693305037480, guid: bee0b95a4439ad641977c9128e92584b, type: 3}
-    - {fileID: 553048268246006339, guid: bee0b95a4439ad641977c9128e92584b, type: 3}
-    - {fileID: 553048268246006339, guid: bee0b95a4439ad641977c9128e92584b, type: 3}
+    - {fileID: 565972692302974791, guid: 16adf9b5140cc8c41b63330371462404, type: 3}
+    - {fileID: -457471454030017301, guid: 16adf9b5140cc8c41b63330371462404, type: 3}
+    - {fileID: -457471454030017301, guid: 16adf9b5140cc8c41b63330371462404, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.6666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

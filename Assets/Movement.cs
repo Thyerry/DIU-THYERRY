@@ -7,15 +7,12 @@ using UnityEngine;
 public class Movement : Character, IAnimatorController
 {
     public float axisY;
-    private float jumpForce = 210;
     private float xspeed = 1f;
     private float yspeed = .8f;
 
     #region Animator Controllers
     private bool walking;
     private bool isJumping;
-    private bool atkJump;
-    private bool atkCombo01;
     #endregion
 
     private AnimatorClipInfo[] clipInfos;
@@ -27,6 +24,7 @@ public class Movement : Character, IAnimatorController
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rigidbody2D.Sleep();
+        axisY = 0;
     }
 
     // Update is called once per frame
@@ -34,33 +32,28 @@ public class Movement : Character, IAnimatorController
     {
         AnimatorControllerInit();
         CheckAxis();
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("blaze_get_hit"))
+        if (axisY >= this.transform.position.y)
+            OnLanding();
+
+        var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (!stateInfo.IsName("blaze_get_hit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("blaze_down"))
         {
             if (!clipInfos[0].clip.name.Contains("atk"))
                 MovementControl();
-            
+
             AttackControll();
+            OrientationControl();
         }
         LimitsControl();
         LayerControl();
-        OrientationControl();
         AnimatorControllerUpdate();
     }
 
     private void AttackControll()
     {
         if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (animator.GetBool("Jumping") || Input.GetKeyDown(KeyCode.Space))
-            {
-                atkJump = true;
-            }
-
-            else
-                atkCombo01 = true;
-        }
+            StartCoroutine(Attack());
     }
-
     private void LimitsControl()
     {
         if (!isJumping)
@@ -83,9 +76,6 @@ public class Movement : Character, IAnimatorController
 
     private void MovementControl()
     {
-        if (axisY >= this.transform.position.y)
-            OnLanding();
-
         if (!isJumping)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -123,15 +113,13 @@ public class Movement : Character, IAnimatorController
     {
         clipInfos = animator.GetCurrentAnimatorClipInfo(0);
         walking = false;
-        atkJump = false;
-        atkCombo01 = false;
+        if (!isJumping)
+            axisY = 9999;
     }
 
     public void AnimatorControllerUpdate()
     {
         animator.SetBool("Walking", walking);
-        animator.SetBool("Atk_Combo_01", atkCombo01);
-        animator.SetBool("Atk_Jump", atkJump);
     }
 
     public void OnLanding()
@@ -150,6 +138,32 @@ public class Movement : Character, IAnimatorController
 
     protected override IEnumerator Attack()
     {
-        throw new NotImplementedException();
+        var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        animator.SetTrigger("Attacking");
+        yield return new WaitForSeconds(0.1f);
+
+        Vector2 punchPosition = spriteRenderer.flipX ? leftPunch.position : rightPunch.position;
+
+        var hit = Physics2D.CircleCast(punchPosition, punchRadius, Vector2.up);
+
+        if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+        {
+            var hitParans = new HitParams(spriteRenderer.sortingOrder, 5, transform);
+            hit.collider.SendMessage("GetHit", hitParans);
+        }
+    }
+
+    protected override void DeathAnimation(bool fallSide)
+    {
+        isJumping = true;
+        if(axisY == 9999)
+            axisY = transform.position.y;
+
+        spriteRenderer.flipX = fallSide;
+        rigidbody2D.gravityScale = 1.0f;
+        var xforce = spriteRenderer.flipX ? 150f : -150f;
+        rigidbody2D.WakeUp();
+        rigidbody2D.AddForce(new Vector2(xforce, jumpForce / 3));
     }
 }

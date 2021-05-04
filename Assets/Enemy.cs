@@ -14,7 +14,7 @@ public class Enemy : Character
     States state = States.patrol;
 
     [SerializeField]
-    float searchRange = 1;
+    float searchRange = 10f;
 
     [SerializeField]
     float stoppingDistance = 0.4f;
@@ -23,7 +23,9 @@ public class Enemy : Character
     Vector3 target;
     Vector2 vel;
     bool isMoving;
-
+    private bool isJumping;
+    float axisY;
+    private bool destroy;
 
     void Start()
     {
@@ -42,7 +44,7 @@ public class Enemy : Character
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, searchRange);
         Gizmos.DrawWireSphere(target, 0.1f);
-        Gizmos.DrawWireCube(target, new Vector3(0.5f,0.1f,0));
+        Gizmos.DrawWireCube(target, new Vector3(0.5f, 0.1f, 0));
 
         base.OnDrawGizmosSelected();
     }
@@ -58,15 +60,32 @@ public class Enemy : Character
     // Update is called once per frame
     void Update()
     {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("galsia_down"))
+            DoAction();
+        else if (transform.position.y <= axisY)
+        {
+            if (isJumping)
+                transform.position = new Vector3(transform.position.x, axisY, 0.0f);
+            else
+                axisY = transform.position.y;
+
+            isJumping = false;
+            rigidbody2D.gravityScale = 0.0f;
+            rigidbody2D.Sleep();
+        }
+
+    }
+    private void DoAction()
+    {
         AnimatorControllerInit();
         if (state == States.pursuit)
         {
-            if(!player.GetComponent<Animator>().GetBool("Jumping"))
+            if (!player.GetComponent<Animator>().GetBool("Jumping"))
                 target = player.transform.position;
             else
                 target = new Vector3(player.transform.position.x, player.GetComponent<Movement>().axisY, 0f);
 
-            if(Vector3.Distance(target, transform.position) > searchRange * 1.2f)
+            if (Vector3.Distance(target, transform.position) > searchRange * 1.2f)
             {
                 target = transform.position;
                 state = States.patrol;
@@ -79,21 +98,21 @@ public class Enemy : Character
         if (state == States.patrol && radiusPatrol.collider != null && radiusPatrol.collider.CompareTag("Player"))
         {
             state = States.pursuit;
-        }     
+        }
 
         var clipinfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "galsia_attack";
         vel = target - transform.position;
-        if(!clipinfo)
+        if (!clipinfo)
             OrientationControl();
-        if(vel.magnitude < stoppingDistance)
+        if (vel.magnitude < stoppingDistance)
             vel = Vector2.zero;
-        
+
         vel.Normalize();
 
         if (!clipinfo)
             rigidbody2D.velocity = new Vector2(vel.x * horizontal, vel.y * vertical);
 
-        if(rigidbody2D.velocity != Vector2.zero)
+        if (rigidbody2D.velocity != Vector2.zero)
         {
             isMoving = true;
         }
@@ -115,12 +134,7 @@ public class Enemy : Character
 
             if (hit.collider != null && hit.collider.CompareTag("Player"))
             {
-                //print(hit.collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder);
-                HitParams hitParans = new HitParams()
-                {
-                    SpriteLayer = spriteRenderer.sortingOrder,
-                    Damage = 0
-                };
+                var hitParans = new HitParams(spriteRenderer.sortingOrder, 4, transform);
                 hit.collider.SendMessage("GetHit", hitParans);
             }
         }
@@ -148,5 +162,15 @@ public class Enemy : Character
     public void AnimatorControllerUpdate()
     {
         animator.SetBool("Movement", isMoving);
+    }
+
+    protected override void DeathAnimation(bool fallside)
+    {
+        isJumping = true;
+        axisY = transform.position.y;
+        rigidbody2D.gravityScale = 1.0f;
+        var xforce = spriteRenderer.flipX ? 150f : -150f;
+        rigidbody2D.WakeUp();
+        rigidbody2D.AddForce(new Vector2(xforce, jumpForce / 3));
     }
 }
