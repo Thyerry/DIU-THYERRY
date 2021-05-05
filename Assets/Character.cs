@@ -47,7 +47,6 @@ public abstract class Character : MonoBehaviour
             if (characterLife - hp.Damage <= 0)
             {
                 animator.SetTrigger("Death");
-                Object.Destroy(gameObject, 0.6f);
                 DeathAnimation(hitDirection);
             }
             else

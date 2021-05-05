@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 067ccef594fd0a94d8d03d57729e7b3a
+guid: dc9ac1b7d99724e4692150824ea3fffd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5734666732248526151
-    second: blaze_get_hit_0
+      213: 7413729046037875581
+    second: galsia_get_hit 1_0
   - first:
-      213: 3062133325704126975
-    second: blaze_get_hit_1
+      213: 6976849000721460820
+    second: galsia_get_hit 1_1
   - first:
-      213: -3912248342073319235
-    second: blaze_get_hit_2
+      213: 8150214029757172789
+    second: galsia_get_hit 1_2
   - first:
-      213: 3870667095019897079
-    second: blaze_get_hit_3
+      213: -8773287224694928878
+    second: galsia_get_hit 1_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -71,7 +71,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -97,89 +97,101 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: blaze_get_hit_0
+      name: galsia_get_hit 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 39
-        height: 54
+        width: 43
+        height: 63
       alignment: 9
-      pivot: {x: 0.55, y: 0}
+      pivot: {x: 0.40297338, y: -0.0008600636}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb460c4201892724481f09c6af7217c7
-      internalID: 5734666732248526151
+      spriteID: d7b451aa94bd2e660800000000000000
+      internalID: 7413729046037875581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blaze_get_hit_1
+      name: galsia_get_hit 1_1
       rect:
         serializedVersion: 2
-        x: 40
+        x: 45
         y: 0
-        width: 39
-        height: 54
+        width: 43
+        height: 63
       alignment: 9
-      pivot: {x: 0.45, y: 0}
+      pivot: {x: 0.60635036, y: -0.0010520107}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 125416633f052384fb357221d1a03e99
-      internalID: 3062133325704126975
+      spriteID: 45eaa83833fb2d060800000000000000
+      internalID: 6976849000721460820
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blaze_get_hit_2
+      name: galsia_get_hit 1_2
       rect:
         serializedVersion: 2
-        x: 81
+        x: 94
         y: 0
-        width: 39
-        height: 54
+        width: 43
+        height: 63
       alignment: 9
-      pivot: {x: 0.525, y: 0}
+      pivot: {x: 0.4553022, y: -0.000000005902794}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3703c2e753b08b345a5ba24a524888a2
-      internalID: -3912248342073319235
+      spriteID: 53cc4177a706b1170800000000000000
+      internalID: 8150214029757172789
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blaze_get_hit_3
+      name: galsia_get_hit 1_3
       rect:
         serializedVersion: 2
-        x: 121
+        x: 147
         y: 0
-        width: 39
-        height: 54
+        width: 43
+        height: 63
       alignment: 9
-      pivot: {x: 0.475, y: 0}
+      pivot: {x: 0.5416153, y: -0.000000005902794}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d284b19938ff7c45be750b0ee1b367d
-      internalID: 3870667095019897079
+      spriteID: 21a069380c50f3680800000000000000
+      internalID: -8773287224694928878
       vertices: []
       indices: 
       edges: []

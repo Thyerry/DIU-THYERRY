@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets;
+using System.Linq;
 
 public class Enemy : Character
 {
@@ -14,11 +15,11 @@ public class Enemy : Character
     States state = States.patrol;
 
     [SerializeField]
-    float searchRange = 10f;
+    float searchRange;
 
     [SerializeField]
     float stoppingDistance = 0.4f;
-
+    [SerializeField]
     protected GameObject player;
     Vector3 target;
     Vector2 vel;
@@ -32,7 +33,8 @@ public class Enemy : Character
         target = GetComponent<Transform>().position;
         player = GameObject.FindGameObjectWithTag("Player");
         InvokeRepeating("SetTarget", 2, 2);
-        InvokeRepeating("SendPunch", 0, 2);
+        var punchCooldown = Random.Range(1.5f, 2.5f);
+        InvokeRepeating("SendPunch", 0, punchCooldown);
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -60,7 +62,14 @@ public class Enemy : Character
     // Update is called once per frame
     void Update()
     {
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("galsia_down"))
+        if(player == null)
+        {
+            state = States.patrol;
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
+        var stateinfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (!stateinfo.IsName("galsia_down") && !stateinfo.IsName("galsia_get_hit"))
             DoAction();
         else if (transform.position.y <= axisY)
         {
@@ -93,9 +102,10 @@ public class Enemy : Character
             }
         }
 
-        var radiusPatrol = Physics2D.CircleCast(transform.position, searchRange, Vector2.up);
+        var radiusPatrol = Physics2D.CircleCastAll(transform.position, searchRange, Vector2.up)
+                                    .LastOrDefault(p => p.collider.CompareTag("Player"));
 
-        if (state == States.patrol && radiusPatrol.collider != null && radiusPatrol.collider.CompareTag("Player"))
+        if (state == States.patrol && radiusPatrol.collider != null)
         {
             state = States.pursuit;
         }
@@ -141,7 +151,8 @@ public class Enemy : Character
     }
     void SendPunch()
     {
-        if (state == States.patrol || vel.magnitude != 0)
+        var stateinfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (state == States.patrol || vel.magnitude != 0 || stateinfo.IsName("galsia_down") || stateinfo.IsName("galsia_get_hit"))
             return;
         StartCoroutine(Attack());
     }
@@ -172,5 +183,9 @@ public class Enemy : Character
         var xforce = spriteRenderer.flipX ? 150f : -150f;
         rigidbody2D.WakeUp();
         rigidbody2D.AddForce(new Vector2(xforce, jumpForce / 3));
+    }
+    void DeadForGood()
+    {
+        Destroy(gameObject);
     }
 }

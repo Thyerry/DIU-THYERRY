@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : Character, IAnimatorController
 {
@@ -16,7 +17,7 @@ public class Movement : Character, IAnimatorController
     #endregion
 
     private AnimatorClipInfo[] clipInfos;
-
+    private GameObject spawner;
 
     void Awake()
     {
@@ -24,7 +25,8 @@ public class Movement : Character, IAnimatorController
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         rigidbody2D.Sleep();
-        axisY = 0;
+
+        spawner = GameObject.Find("PlayerSpawner");
     }
 
     // Update is called once per frame
@@ -145,15 +147,19 @@ public class Movement : Character, IAnimatorController
 
         Vector2 punchPosition = spriteRenderer.flipX ? leftPunch.position : rightPunch.position;
 
-        var hit = Physics2D.CircleCast(punchPosition, punchRadius, Vector2.up);
+        var hitList = Physics2D.CircleCastAll(punchPosition, punchRadius, Vector2.up);
 
-        if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+        foreach (var hit in hitList)
         {
-            var hitParans = new HitParams(spriteRenderer.sortingOrder, 5, transform);
-            hit.collider.SendMessage("GetHit", hitParans);
+            if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+            {
+                var hitParans = new HitParams(spriteRenderer.sortingOrder, 5, transform);
+                hit.collider.SendMessage("GetHit", hitParans);
+            }
         }
+        
     }
-
+    
     protected override void DeathAnimation(bool fallSide)
     {
         isJumping = true;
@@ -165,5 +171,12 @@ public class Movement : Character, IAnimatorController
         var xforce = spriteRenderer.flipX ? 150f : -150f;
         rigidbody2D.WakeUp();
         rigidbody2D.AddForce(new Vector2(xforce, jumpForce / 3));
+    }
+
+    void RespawnMessage()
+    {
+        Destroy(gameObject);
+        spawner.SendMessage("Spawn");
+        SceneManager.LoadScene("SampleScene");
     }
 }
