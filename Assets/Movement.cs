@@ -26,6 +26,7 @@ public class Movement : Character, IAnimatorController
         animator = GetComponent<Animator>();
         rigidbody2D.Sleep();
 
+        
         spawner = GameObject.Find("PlayerSpawner");
     }
 
