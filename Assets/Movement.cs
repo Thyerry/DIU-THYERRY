@@ -26,25 +26,25 @@ public class Movement : Character, IAnimatorController
         animator = GetComponent<Animator>();
         rigidbody2D.Sleep();
 
-        
         spawner = GameObject.Find("PlayerSpawner");
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(characterLife);
         AnimatorControllerInit();
         CheckAxis();
         if (axisY >= this.transform.position.y)
             OnLanding();
 
-        var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!stateInfo.IsName("blaze_get_hit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("blaze_down"))
+        if (state != States.hit && state != States.down)
         {
-            if (!clipInfos[0].clip.name.Contains("atk"))
+            AttackControl();
+
+            if (!animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("atk"))
                 MovementControl();
 
-            AttackControll();
             OrientationControl();
         }
         LimitsControl();
@@ -52,10 +52,14 @@ public class Movement : Character, IAnimatorController
         AnimatorControllerUpdate();
     }
 
-    private void AttackControll()
+    private void AttackControl()
     {
         if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (state != States.jumping)
+                state = States.attaking;
             StartCoroutine(Attack());
+        }
     }
     private void LimitsControl()
     {
@@ -74,7 +78,7 @@ public class Movement : Character, IAnimatorController
         if (horizontal > 0)
             spriteRenderer.flipX = false;
         else if (horizontal < 0)
-            spriteRenderer.flipX = true;
+            spriteRenderer.flipX = true;    
     }
 
     private void MovementControl()
@@ -83,6 +87,7 @@ public class Movement : Character, IAnimatorController
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                state = States.jumping;
                 axisY = transform.position.y;
                 isJumping = true;
                 rigidbody2D.gravityScale = 1.5f;
@@ -128,10 +133,14 @@ public class Movement : Character, IAnimatorController
     public void OnLanding()
     {
         if (isJumping)
+        {
+            if(state != States.down)
+                state = States.stand;
             transform.position = new Vector3(transform.position.x, axisY, 0.0f);
+        }
         else
             axisY = transform.position.y;
-
+        
         isJumping = false;
         rigidbody2D.gravityScale = 0.0f;
         rigidbody2D.Sleep();
@@ -141,7 +150,6 @@ public class Movement : Character, IAnimatorController
 
     protected override IEnumerator Attack()
     {
-        var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         animator.SetTrigger("Attacking");
         yield return new WaitForSeconds(0.1f);
@@ -149,35 +157,54 @@ public class Movement : Character, IAnimatorController
         Vector2 punchPosition = spriteRenderer.flipX ? leftPunch.position : rightPunch.position;
 
         var hitList = Physics2D.CircleCastAll(punchPosition, punchRadius, Vector2.up);
+        var heavyHit = animator.GetBool("Jumping");
 
         foreach (var hit in hitList)
         {
             if (hit.collider != null && hit.collider.CompareTag("Enemy"))
             {
-                var hitParans = new HitParams(spriteRenderer.sortingOrder, 5, transform);
+                var hitParans = new HitParams(spriteRenderer.sortingOrder, 5, transform, heavyHit);
                 hit.collider.SendMessage("GetHit", hitParans);
             }
         }
-        
     }
-    
-    protected override void DeathAnimation(bool fallSide)
+
+    protected override void DownAnimation(bool fallSide)
     {
         isJumping = true;
-        if(axisY == 9999)
+        if (axisY == 9999)
             axisY = transform.position.y;
+
+        animator.SetTrigger("Down");
+        float yforce = state != States.jumping ? jumpForce / 3 : 0;
+        state = States.down;
 
         spriteRenderer.flipX = fallSide;
         rigidbody2D.gravityScale = 1.0f;
         var xforce = spriteRenderer.flipX ? 150f : -150f;
         rigidbody2D.WakeUp();
-        rigidbody2D.AddForce(new Vector2(xforce, jumpForce / 3));
+        rigidbody2D.AddForce(new Vector2(xforce, yforce));
     }
 
+    #region Animation events
     void RespawnMessage()
     {
         Destroy(gameObject);
         spawner.SendMessage("Spawn");
         SceneManager.LoadScene("SampleScene");
     }
+
+    void GetHitState()
+    {
+        if (state != States.hit)
+            state = States.hit;
+        else
+            state = States.stand;
+    }
+    
+    void ToStand()
+    {
+        state = States.stand;
+    }
+    #endregion
 }

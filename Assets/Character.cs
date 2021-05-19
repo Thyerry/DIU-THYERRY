@@ -21,12 +21,14 @@ public abstract class Character : MonoBehaviour
     protected int layerRange = 8;
     [SerializeField]
     protected float jumpForce = 210;
-
+    [SerializeField]
+    protected States state;
 
     protected static Vector2 LimitY = new Vector2(0.039f, -0.841f);
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
     protected Rigidbody2D rigidbody2D;
+
 
     protected virtual void OnDrawGizmosSelected()
     {
@@ -40,24 +42,35 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void GetHit(HitParams hp)
     {
-        var hitDirection = transform.position.x > hp.AtkTransform.position.x;
-        if ((hp.SpriteLayer + layerRange >= spriteRenderer.sortingOrder && hp.SpriteLayer - layerRange <= spriteRenderer.sortingOrder)
-            && !animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("down"))
+        if (hp.SpriteLayer + layerRange >= spriteRenderer.sortingOrder
+            && hp.SpriteLayer - layerRange <= spriteRenderer.sortingOrder
+            && state != States.down)
         {
-            if (characterLife - hp.Damage <= 0)
-            {
-                animator.SetTrigger("Death");
-                DeathAnimation(hitDirection);
-            }
+            characterLife -= hp.Damage;
+            AnimationHandler(hp);
+        }
+    }
+
+    private void AnimationHandler(HitParams hp)
+    {
+        var hitDirection = transform.position.x > hp.AtkTransform.position.x;
+        if (characterLife <= 0)
+        {
+            animator.SetBool("Death", true);
+            DownAnimation(hitDirection);
+        }
+        else
+        {
+            if(hp.heavyHit || state == States.jumping)
+                DownAnimation(hitDirection);
             else
             {
                 animator.SetTrigger("GetHit");
-                characterLife -= hp.Damage;
                 spriteRenderer.flipX = hitDirection;
             }
         }
     }
 
     abstract protected IEnumerator Attack();
-    abstract protected void DeathAnimation(bool fallSide);
+    abstract protected void DownAnimation(bool fallSide);
 }

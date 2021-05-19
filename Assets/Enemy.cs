@@ -6,14 +6,6 @@ using System.Linq;
 
 public class Enemy : Character
 {
-
-    // distancia minima do inimigo do player em x = 0,4
-    // distancia minima do inimigo do player em y = 0,1
-
-    enum States { patrol, pursuit }
-    [SerializeField]
-    States state = States.patrol;
-
     [SerializeField]
     float searchRange;
 
@@ -69,7 +61,10 @@ public class Enemy : Character
         }
 
         var stateinfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!stateinfo.IsName("galsia_down") && !stateinfo.IsName("galsia_get_hit"))
+        if (!stateinfo.IsName("galsia_down") 
+            && !stateinfo.IsName("galsia_get_hit") 
+            && !stateinfo.IsName("galsia_death")
+            && !stateinfo.IsName("galsia_get_up"))
             DoAction();
         else if (transform.position.y <= axisY)
         {
@@ -144,7 +139,7 @@ public class Enemy : Character
 
             if (hit.collider != null && hit.collider.CompareTag("Player"))
             {
-                var hitParans = new HitParams(spriteRenderer.sortingOrder, 4, transform);
+                var hitParans = new HitParams(spriteRenderer.sortingOrder, 4, transform, false);
                 hit.collider.SendMessage("GetHit", hitParans);
             }
         }
@@ -175,17 +170,28 @@ public class Enemy : Character
         animator.SetBool("Movement", isMoving);
     }
 
-    protected override void DeathAnimation(bool fallside)
+    protected override void DownAnimation(bool fallside)
     {
+
+        animator.SetTrigger("Down");
         isJumping = true;
         axisY = transform.position.y;
         rigidbody2D.gravityScale = 1.0f;
         var xforce = spriteRenderer.flipX ? 150f : -150f;
         rigidbody2D.WakeUp();
         rigidbody2D.AddForce(new Vector2(xforce, jumpForce / 3));
+        state = States.down;
     }
+
+    #region Animation Events
     void DeadForGood()
     {
         Destroy(gameObject);
     }
+    void GetUp()
+    {
+        state = States.patrol;
+    }
+    
+    #endregion
 }
