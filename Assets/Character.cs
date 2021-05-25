@@ -16,18 +16,28 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     protected float punchRadius = 0.1f;
     [SerializeField]
-    protected int characterLife = 10;
+    public int MaxHealth;
+    [SerializeField]
+    protected int MaxHitStun;
     [SerializeField]
     protected int layerRange = 8;
     [SerializeField]
     protected float jumpForce = 210;
     [SerializeField]
     protected States state;
+    [SerializeField]
+    AudioSource AudioGetHit;
+    [SerializeField]
+    AudioSource AudioDeath;
+    [SerializeField]
+    protected AudioSource AudioJumpAttack;
 
     protected static Vector2 LimitY = new Vector2(0.039f, -0.841f);
     protected Animator animator;
     protected SpriteRenderer spriteRenderer;
-    protected Rigidbody2D rigidbody2D;
+    protected new Rigidbody2D rigidbody2D;
+    public int currentLife;
+    protected int currentHitStun;
 
 
     protected virtual void OnDrawGizmosSelected()
@@ -40,37 +50,62 @@ public abstract class Character : MonoBehaviour
         Gizmos.DrawWireSphere(rightPunch.position, punchRadius);
     }
 
+    private void Start()
+    {
+        currentLife = MaxHealth;
+        InvokeRepeating("ReduceHitStun", 0, 0.5f);
+    }
+
     protected virtual void GetHit(HitParams hp)
     {
-        if (hp.SpriteLayer + layerRange >= spriteRenderer.sortingOrder
-            && hp.SpriteLayer - layerRange <= spriteRenderer.sortingOrder
-            && state != States.down)
+        Debug.Log($"{name}  {currentLife} {currentHitStun}");
+        if (state != States.down)
         {
-            characterLife -= hp.Damage;
-            AnimationHandler(hp);
+            if (hp.special
+                || (hp.SpriteLayer + layerRange >= spriteRenderer.sortingOrder
+                    && hp.SpriteLayer - layerRange <= spriteRenderer.sortingOrder))
+            {
+                currentLife -= hp.Damage;
+                currentHitStun += hp.hitStun;
+                AnimationHandler(hp);
+            }
         }
+
     }
 
     private void AnimationHandler(HitParams hp)
     {
-        var hitDirection = transform.position.x > hp.AtkTransform.position.x;
-        if (characterLife <= 0)
+        if (currentHitStun >= MaxHitStun)
         {
+            hp.heavyHit = true;
+            currentHitStun = 0;
+        }
+
+        var hitDirection = transform.position.x > hp.AtkPositionX;
+        AudioGetHit.Play();
+        if (currentLife <= 0)
+        {
+            AudioDeath.Play();
             animator.SetBool("Death", true);
             DownAnimation(hitDirection);
         }
         else
         {
-            if(hp.heavyHit || state == States.jumping)
+            if (hp.heavyHit || state == States.jumping)
                 DownAnimation(hitDirection);
             else
             {
+                state = States.hit;
                 animator.SetTrigger("GetHit");
                 spriteRenderer.flipX = hitDirection;
             }
         }
     }
 
-    abstract protected IEnumerator Attack();
+    void ReduceHitStun()
+    {
+        if (currentHitStun > 0)
+            currentHitStun -= 1;
+    }
     abstract protected void DownAnimation(bool fallSide);
 }

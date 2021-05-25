@@ -1,0 +1,876 @@
+fileFormatVersion: 2
+guid: 1d2753440c940374e87802a0aef46562
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5982167065999521851
+    second: galsia 1_0
+  - first:
+      213: 7189859999324302972
+    second: galsia 1_1
+  - first:
+      213: -9033551295686435006
+    second: galsia 1_2
+  - first:
+      213: -5978852345521850340
+    second: galsia 1_3
+  - first:
+      213: -7799194989316209334
+    second: galsia 1_4
+  - first:
+      213: -614138051511368757
+    second: galsia 1_5
+  - first:
+      213: 941010324189583956
+    second: galsia 1_6
+  - first:
+      213: 4282209545503866892
+    second: galsia 1_7
+  - first:
+      213: 5040722060647760140
+    second: galsia 1_8
+  - first:
+      213: -5288927914852563069
+    second: galsia 1_9
+  - first:
+      213: 3382504016686254911
+    second: galsia 1_10
+  - first:
+      213: -4507395170016688800
+    second: galsia 1_11
+  - first:
+      213: -1864823071639130930
+    second: galsia 1_12
+  - first:
+      213: -4157009188442583474
+    second: galsia 1_13
+  - first:
+      213: 7373339971776048101
+    second: galsia 1_14
+  - first:
+      213: -5376793293742084129
+    second: galsia 1_15
+  - first:
+      213: -1944496145853442240
+    second: galsia 1_16
+  - first:
+      213: -1193167721740432473
+    second: galsia 1_17
+  - first:
+      213: 3883468439072307763
+    second: galsia 1_18
+  - first:
+      213: 355089482825233309
+    second: galsia 1_19
+  - first:
+      213: -3733267234749598600
+    second: galsia 1_20
+  - first:
+      213: -3756061093158781126
+    second: galsia 1_21
+  - first:
+      213: 797848001133411483
+    second: galsia 1_22
+  - first:
+      213: 1943659772040125697
+    second: galsia 1_23
+  - first:
+      213: 8457193954363671998
+    second: galsia 1_24
+  - first:
+      213: -4432865922790180462
+    second: galsia 1_25
+  - first:
+      213: -6241919050938470587
+    second: galsia 1_26
+  - first:
+      213: 7442711709883456316
+    second: galsia 1_27
+  - first:
+      213: 666539160247124577
+    second: galsia 1_28
+  - first:
+      213: -9178443948267578895
+    second: galsia 1_29
+  - first:
+      213: -2100434829094432232
+    second: galsia 1_30
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: galsia 1_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 487
+        width: 46
+        height: 74
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3831fb604de40350800000000000000
+      internalID: 5982167065999521851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_1
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 487
+        width: 46
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7ee38c639387c360800000000000000
+      internalID: 7189859999324302972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_2
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 487
+        width: 46
+        height: 72
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24f175855f062a280800000000000000
+      internalID: -9033551295686435006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_3
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 403
+        width: 46
+        height: 74
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c18b8a41879d60da0800000000000000
+      internalID: -5978852345521850340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_4
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 403
+        width: 39
+        height: 75
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a450dc7aa71b3c390800000000000000
+      internalID: -7799194989316209334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_5
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 403
+        width: 39
+        height: 75
+      alignment: 9
+      pivot: {x: 0.4, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc34d9c22b42a77f0800000000000000
+      internalID: -614138051511368757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_6
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 329
+        width: 43
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45a9b4777e32f0d00800000000000000
+      internalID: 941010324189583956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 329
+        width: 46
+        height: 67
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c008b8db4e67d6b30800000000000000
+      internalID: 4282209545503866892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_8
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 334
+        width: 55
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c01826cd10e34f540800000000000000
+      internalID: 5040722060647760140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_9
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 332
+        width: 79
+        height: 21
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 387c0985514f996b0800000000000000
+      internalID: -5288927914852563069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_10
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 332
+        width: 70
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b8aed5b7111fe20800000000000000
+      internalID: 3382504016686254911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_11
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 332
+        width: 40
+        height: 44
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06508dc59f38271c0800000000000000
+      internalID: -4507395170016688800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_12
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 248
+        width: 39
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecc2ffdeb41de16e0800000000000000
+      internalID: -1864823071639130930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_13
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 248
+        width: 39
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4e48dafa265f46c0800000000000000
+      internalID: -4157009188442583474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_14
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 248
+        width: 39
+        height: 68
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5eb66e183ad535660800000000000000
+      internalID: 7373339971776048101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_15
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 248
+        width: 39
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdfeccf9cfac165b0800000000000000
+      internalID: -5376793293742084129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_16
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 248
+        width: 32
+        height: 71
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0471a47ce03c305e0800000000000000
+      internalID: -1944496145853442240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_17
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 248
+        width: 32
+        height: 71
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ab033c5744017fe0800000000000000
+      internalID: -1193167721740432473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_18
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 202
+        width: 32
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33a785748f9d4e530800000000000000
+      internalID: 3883468439072307763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_19
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 202
+        width: 63
+        height: 73
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d937647d0088de400800000000000000
+      internalID: 355089482825233309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_20
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 165
+        width: 39
+        height: 75
+      alignment: 9
+      pivot: {x: 0.39, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 874352dca35c03cc0800000000000000
+      internalID: -3733267234749598600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_21
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 165
+        width: 68
+        height: 74
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3ffa93165acfdbc0800000000000000
+      internalID: -3756061093158781126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_22
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 165
+        width: 71
+        height: 74
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9cff44a786821b00800000000000000
+      internalID: 797848001133411483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_23
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 86
+        width: 44
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10d1ba4c34449fa10800000000000000
+      internalID: 1943659772040125697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_24
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 86
+        width: 47
+        height: 72
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb58d66e71dfd5570800000000000000
+      internalID: 8457193954363671998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_25
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 89
+        width: 56
+        height: 71
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2993827fdeb4b72c0800000000000000
+      internalID: -4432865922790180462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_26
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 89
+        width: 62
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54fa11cb1bf3069a0800000000000000
+      internalID: -6241919050938470587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_27
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 10
+        width: 43
+        height: 63
+      alignment: 9
+      pivot: {x: 0.55, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3b5e31fdd2d94760800000000000000
+      internalID: 7442711709883456316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_28
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 10
+        width: 43
+        height: 63
+      alignment: 9
+      pivot: {x: 0.45, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 162ca63b5d5004900800000000000000
+      internalID: 666539160247124577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_29
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 10
+        width: 43
+        height: 63
+      alignment: 9
+      pivot: {x: 0.53, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f95da8cbdd9f9080800000000000000
+      internalID: -9178443948267578895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: galsia 1_30
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 10
+        width: 43
+        height: 63
+      alignment: 9
+      pivot: {x: 0.48, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 812d7f9c6a1c9d2e0800000000000000
+      internalID: -2100434829094432232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

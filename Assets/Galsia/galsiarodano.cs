@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class galsiarodano : MonoBehaviour
 {
+    private float rotation;
+    public float RotationSpeed;
+
+
     void Update()
     {
-        this.transform.rotation.SetEulerRotation(this.transform.rotation.x + .01f, this.transform.rotation.y - .01f, this.transform.rotation.z);
+        rotation += Time.deltaTime * RotationSpeed;
+
+        transform.rotation = Quaternion.Euler(0, rotation, 0);
     }
 }

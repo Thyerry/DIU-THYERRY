@@ -8,25 +8,28 @@ public class Enemy : Character
 {
     [SerializeField]
     float searchRange;
-
+    
     [SerializeField]
     float stoppingDistance = 0.4f;
     [SerializeField]
     protected GameObject player;
+
     Vector3 target;
     Vector2 vel;
     bool isMoving;
     private bool isJumping;
     float axisY;
     private bool destroy;
+    
 
-    void Start()
+    void Awake()
     {
+        
         target = GetComponent<Transform>().position;
         player = GameObject.FindGameObjectWithTag("Player");
         InvokeRepeating("SetTarget", 2, 2);
         var punchCooldown = Random.Range(1.5f, 2.5f);
-        InvokeRepeating("SendPunch", 0, punchCooldown);
+        InvokeRepeating("SendPunch", 0, punchCooldown);        
 
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -60,12 +63,11 @@ public class Enemy : Character
             player = GameObject.FindGameObjectWithTag("Player");
         }
 
-        var stateinfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (!stateinfo.IsName("galsia_down") 
-            && !stateinfo.IsName("galsia_get_hit") 
-            && !stateinfo.IsName("galsia_death")
-            && !stateinfo.IsName("galsia_get_up"))
+        if (state != States.down
+            && state != States.hit 
+            && state != States.attaking)
             DoAction();
+
         else if (transform.position.y <= axisY)
         {
             if (isJumping)
@@ -81,75 +83,91 @@ public class Enemy : Character
     }
     private void DoAction()
     {
-        AnimatorControllerInit();
-        if (state == States.pursuit)
+        try
         {
-            if (!player.GetComponent<Animator>().GetBool("Jumping"))
-                target = player.transform.position;
-            else
-                target = new Vector3(player.transform.position.x, player.GetComponent<Movement>().axisY, 0f);
 
-            if (Vector3.Distance(target, transform.position) > searchRange * 1.2f)
+            AnimatorControllerInit();
+            if (state == States.pursuit)
             {
-                target = transform.position;
-                state = States.patrol;
-                return;
+                if (!player.GetComponent<Animator>().GetBool("Jumping"))
+                    target = player.transform.position;
+                else
+                    target = new Vector3(player.transform.position.x, player.GetComponent<Movement>().axisY, 0f);
+
+                if (Vector3.Distance(target, transform.position) > searchRange * 1.2f)
+                {
+                    target = transform.position;
+                    state = States.patrol;
+                    return;
+                }
             }
+
+            var radiusPatrol = Physics2D.CircleCastAll(transform.position, searchRange, Vector2.up)
+                                        .LastOrDefault(p => p.collider.CompareTag("Player"));
+
+            if (state == States.patrol && radiusPatrol.collider != null)
+            {
+                state = States.pursuit;
+            }
+
+            vel = target - transform.position;
+            if (state != States.attaking)
+                OrientationControl();
+
+            if (vel.magnitude < stoppingDistance)
+            {
+                int enemyOrder = spriteRenderer.sortingOrder;
+                int playerOrder = player.GetComponent<SpriteRenderer>().sortingOrder;
+
+                if (enemyOrder + layerRange >= playerOrder
+                    && enemyOrder - layerRange <= playerOrder)
+                    vel = Vector2.zero;
+
+                else
+                    vel = new Vector2(0, vel.y);
+            }
+
+            vel.Normalize();
+
+            if (state != States.attaking)
+                rigidbody2D.velocity = new Vector2(vel.x * horizontal, vel.y * vertical);
+
+            if (rigidbody2D.velocity != Vector2.zero)
+            {
+                isMoving = true;
+            }
+
+            LayerControl();
+            AnimatorControllerUpdate();
         }
-
-        var radiusPatrol = Physics2D.CircleCastAll(transform.position, searchRange, Vector2.up)
-                                    .LastOrDefault(p => p.collider.CompareTag("Player"));
-
-        if (state == States.patrol && radiusPatrol.collider != null)
+        catch (System.Exception)
         {
-            state = States.pursuit;
+            state = States.patrol;
         }
-
-        var clipinfo = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "galsia_attack";
-        vel = target - transform.position;
-        if (!clipinfo)
-            OrientationControl();
-        if (vel.magnitude < stoppingDistance)
-            vel = Vector2.zero;
-
-        vel.Normalize();
-
-        if (!clipinfo)
-            rigidbody2D.velocity = new Vector2(vel.x * horizontal, vel.y * vertical);
-
-        if (rigidbody2D.velocity != Vector2.zero)
-        {
-            isMoving = true;
-        }
-
-        LayerControl();
-        AnimatorControllerUpdate();
     }
-    protected override IEnumerator Attack()
+    protected IEnumerator Attack()
     {
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsName("galsia_idle"))
+
+        state = States.attaking;
+        yield return new WaitForSeconds(0.1f);
+
+        Vector2 punchPosition = spriteRenderer.flipX ? leftPunch.position : rightPunch.position;
+
+        var hit = Physics2D.CircleCast(punchPosition, punchRadius, Vector2.up);
+
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
-            animator.SetTrigger("CanAttack");
-            yield return new WaitForSeconds(0.1f);
-
-            Vector2 punchPosition = spriteRenderer.flipX ? leftPunch.position : rightPunch.position;
-
-            var hit = Physics2D.CircleCast(punchPosition, punchRadius, Vector2.up);
-
-            if (hit.collider != null && hit.collider.CompareTag("Player"))
-            {
-                var hitParans = new HitParams(spriteRenderer.sortingOrder, 4, transform, false);
-                hit.collider.SendMessage("GetHit", hitParans);
-            }
+            var hitParans = new HitParams(spriteRenderer.sortingOrder, 4, transform.position.x, 20, false, false);
+            hit.collider.SendMessage("GetHit", hitParans);
         }
     }
     void SendPunch()
     {
         var stateinfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (state == States.patrol || vel.magnitude != 0 || stateinfo.IsName("galsia_down") || stateinfo.IsName("galsia_get_hit"))
+        if (state == States.patrol || vel.magnitude != 0)
             return;
-        StartCoroutine(Attack());
+        animator.SetTrigger("CanAttack");
     }
     private void LayerControl()
     {
@@ -187,8 +205,9 @@ public class Enemy : Character
     void DeadForGood()
     {
         Destroy(gameObject);
+        player.SendMessage("ScoreUp");
     }
-    void GetUp()
+    void BackToPatrol()
     {
         state = States.patrol;
     }

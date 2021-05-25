@@ -7,17 +7,32 @@ using UnityEngine.SceneManagement;
 
 public class Movement : Character, IAnimatorController
 {
+    [SerializeField]
+    Transform activePunch;
+    [SerializeField]
+    GameObject Special;
+    [SerializeField]
+    GameObject GameOver;
+    [SerializeField]
+    MainTheme mainTheme;
+    public bool specialActive;
+    public int score = 0;
     public float axisY;
     private float xspeed = 1f;
     private float yspeed = .8f;
 
+    
+
     #region Animator Controllers
     private bool walking;
     private bool isJumping;
+
     #endregion
 
     private AnimatorClipInfo[] clipInfos;
     private GameObject spawner;
+    public bool specialToken;
+    private int specialPoints;
 
     void Awake()
     {
@@ -26,13 +41,15 @@ public class Movement : Character, IAnimatorController
         animator = GetComponent<Animator>();
         rigidbody2D.Sleep();
 
+        Special.transform.position = new Vector3(-11f, -0.4f);
+        specialActive = false;
+
         spawner = GameObject.Find("PlayerSpawner");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(characterLife);
         AnimatorControllerInit();
         CheckAxis();
         if (axisY >= this.transform.position.y)
@@ -42,11 +59,14 @@ public class Movement : Character, IAnimatorController
         {
             AttackControl();
 
-            if (!animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("atk"))
+            if (!clipInfos[0].clip.name.Contains("atk"))
+            {
                 MovementControl();
-
-            OrientationControl();
+                OrientationControl();
+            }
         }
+
+        SpecialCast();
         LimitsControl();
         LayerControl();
         AnimatorControllerUpdate();
@@ -56,10 +76,56 @@ public class Movement : Character, IAnimatorController
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            switch (clipInfos[0].clip.name)
+            {
+                case "blaze_atk_01":
+                    animator.ResetTrigger("Attacking");
+                    animator.SetBool("ComboHit2", true);
+                    break;
+
+                case "blaze_atk_02":
+                    animator.SetBool("ComboHit2", false);
+                    animator.SetBool("ComboHit3", true);
+                    break;
+
+                case "blaze_atk_03":
+                    animator.SetBool("ComboHit3", false);
+                    animator.SetBool("ComboHit4", true);
+                    break;
+
+                default:
+                    animator.SetTrigger("Attacking");
+                    break;
+            }
+
             if (state != States.jumping)
                 state = States.attaking;
-            StartCoroutine(Attack());
         }
+    }
+
+    private void SpecialCast()
+    {
+        if (Input.GetKeyDown(KeyCode.E) 
+            && !specialActive)
+        {
+            if (!specialToken && currentLife > 20)
+            {
+                currentLife -= 20;
+                Instantiate(Special);
+                specialActive = true;
+            }
+            else if (specialToken)
+            {
+                specialToken = false;
+                specialPoints = 0;
+                Instantiate(Special);
+                specialActive = true;
+            }
+        }
+    }
+    public void SpecialInatcvate()
+    {
+        specialActive = false;
     }
     private void LimitsControl()
     {
@@ -78,7 +144,9 @@ public class Movement : Character, IAnimatorController
         if (horizontal > 0)
             spriteRenderer.flipX = false;
         else if (horizontal < 0)
-            spriteRenderer.flipX = true;    
+            spriteRenderer.flipX = true;
+
+        activePunch.position = spriteRenderer.flipX ? leftPunch.position : rightPunch.position;
     }
 
     private void MovementControl()
@@ -121,6 +189,7 @@ public class Movement : Character, IAnimatorController
     {
         clipInfos = animator.GetCurrentAnimatorClipInfo(0);
         walking = false;
+
         if (!isJumping)
             axisY = 9999;
     }
@@ -134,13 +203,13 @@ public class Movement : Character, IAnimatorController
     {
         if (isJumping)
         {
-            if(state != States.down)
+            if (state != States.down)
                 state = States.stand;
             transform.position = new Vector3(transform.position.x, axisY, 0.0f);
         }
         else
             axisY = transform.position.y;
-        
+
         isJumping = false;
         rigidbody2D.gravityScale = 0.0f;
         rigidbody2D.Sleep();
@@ -148,29 +217,31 @@ public class Movement : Character, IAnimatorController
         animator.SetBool("Jumping", isJumping);
     }
 
-    protected override IEnumerator Attack()
+    protected void Attack(HitParams hp)
     {
-
-        animator.SetTrigger("Attacking");
-        yield return new WaitForSeconds(0.1f);
-
-        Vector2 punchPosition = spriteRenderer.flipX ? leftPunch.position : rightPunch.position;
+       /// HitParams hp = new HitParams(sl, dmg, at, hh);
+        Vector2 punchPosition = activePunch.position;
 
         var hitList = Physics2D.CircleCastAll(punchPosition, punchRadius, Vector2.up);
-        var heavyHit = animator.GetBool("Jumping");
+
+        if(animator.GetBool("Jumping"))
+        {
+            AudioJumpAttack.Play();
+            hp.heavyHit = true;
+        }
 
         foreach (var hit in hitList)
         {
             if (hit.collider != null && hit.collider.CompareTag("Enemy"))
             {
-                var hitParans = new HitParams(spriteRenderer.sortingOrder, 5, transform, heavyHit);
-                hit.collider.SendMessage("GetHit", hitParans);
+                hit.collider.SendMessage("GetHit", hp);
             }
         }
     }
 
     protected override void DownAnimation(bool fallSide)
     {
+        
         isJumping = true;
         if (axisY == 9999)
             axisY = transform.position.y;
@@ -190,21 +261,58 @@ public class Movement : Character, IAnimatorController
     void RespawnMessage()
     {
         Destroy(gameObject);
-        spawner.SendMessage("Spawn");
-        SceneManager.LoadScene("SampleScene");
+        mainTheme.SendMessage("StopPlaying");
+        GameOver.SendMessage("ShowGameOverScreen");
+        //spawner.SendMessage("Spawn");
+        //SceneManager.LoadScene("SampleScene");
     }
 
     void GetHitState()
     {
-        if (state != States.hit)
-            state = States.hit;
-        else
-            state = States.stand;
+        state = States.stand;
     }
-    
+
     void ToStand()
     {
         state = States.stand;
+    }
+
+    void SetBoolToFalse(string theBool)
+    {
+        animator.SetBool(theBool, false);
+        if (theBool == "ComboHit4")
+            resetAttacking();
+    }
+    void resetAttacking()
+    {
+        animator.ResetTrigger("Attacking");
+    }
+    void ScoreUp()
+    {
+        score++;
+        if(!specialToken)
+        {
+            specialPoints++;
+            if (specialPoints >= 20)
+                specialToken = true;
+        }
+    }
+    public void StartAttack(string attackName)
+    {
+
+        HitParams hp = new HitParams(spriteRenderer.sortingOrder, 5, transform.position.x, 1 ,false, false);
+
+        switch (attackName)
+        {
+            case "blaze_atk_04":
+                hp.heavyHit = true;
+                break;
+
+            default: 
+                break;
+        }
+
+        Attack(hp);
     }
     #endregion
 }
