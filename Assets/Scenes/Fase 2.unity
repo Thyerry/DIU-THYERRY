@@ -427,9 +427,6 @@ GameObject:
   m_Component:
   - component: {fileID: 265583634}
   - component: {fileID: 265583633}
-  - component: {fileID: 265583637}
-  - component: {fileID: 265583636}
-  - component: {fileID: 265583635}
   m_Layer: 0
   m_Name: fase 1-1
   m_TagString: Untagged
@@ -477,7 +474,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -9999
-  m_Sprite: {fileID: 21300000, guid: 53bba0301d6b14e4cb1b6e4dfe0e5495, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a6bf2d6fb5946db41a2f59a5e06fb66a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -502,64 +499,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &265583635
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265583632}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bf80f432ec6093545aff37dfa8a13bea, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &265583636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265583632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 890d8cd244b004848822707c98d70b06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swapKey: 110
-  swapper: {fileID: 265583637}
-  palettes:
-  - {fileID: 11400000, guid: f980e35f9e5952449b677a0c49f38d20, type: 2}
-  - {fileID: 11400000, guid: 08c506f5b2f559044a868fb9f271b7b0, type: 2}
-  - {fileID: 11400000, guid: b5d5dab2945b897418b73155575ce401, type: 2}
-  - {fileID: 11400000, guid: cc7f49a1b07d61a4db19463aec475afa, type: 2}
-  - {fileID: 11400000, guid: 9dd2ff2f51e6c664b80446e717e1df09, type: 2}
-  - {fileID: 11400000, guid: 09e5d127278aa6e45bf0106c4299d706, type: 2}
-  - {fileID: 11400000, guid: 1bf68e91a694d8e43ae4f7d0a70a10e2, type: 2}
-  - {fileID: 11400000, guid: b8685c1a8be7feb49a7f0f16ca3da0bf, type: 2}
-  - {fileID: 11400000, guid: 4b0ed522d0034634e8b254ee08faff50, type: 2}
-  init: 1
---- !u!114 &265583637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 265583632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cd9cee08e33e4248be05e4c26a6125b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 265583633}
-  defaultPalette: {fileID: 11400000, guid: 499b7865340da3d42b3097b8d4179fb1, type: 2}
 --- !u!1 &301927214
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,7 +2328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1497606197
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3093,7 +3032,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 547866728844035745, guid: 6121dd75f3ba3584e90ebb30306e6f06, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 547866728844035746, guid: 6121dd75f3ba3584e90ebb30306e6f06, type: 3}
       propertyPath: turkey

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SpecialToken : MonoBehaviour
 {
+    
     Movement playerScript;
     Image specialToken;
     void Awake()

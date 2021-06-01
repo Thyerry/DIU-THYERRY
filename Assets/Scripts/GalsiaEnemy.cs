@@ -49,12 +49,12 @@ public class GalsiaEnemy : Enemy, IAnimatorController
             spriteRenderer.flipX = true;
     }
 
-    public void AnimatorControllerInit()
+    public new void AnimatorControllerInit()
     {
         isMoving = false;
     }
 
-    public void AnimatorControllerUpdate()
+    public new void AnimatorControllerUpdate()
     {
         animator.SetBool("Movement", isMoving);
     }

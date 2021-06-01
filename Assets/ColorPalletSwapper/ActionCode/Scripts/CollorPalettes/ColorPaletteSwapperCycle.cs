@@ -18,19 +18,18 @@ namespace ActionCode.ColorPalettes
             swapper = GetComponent<ColorPaletteSwapper>();
         }
 
-        private void Update()
-        {
-            if (init)
-                SwapPalette();
-        }
-
-        private void SwapPalette()
+        public void SwapPalette()
         {
             if (palettes.Length == 0) return;
 
             _palletIndex = (_palletIndex + 1) % palettes.Length;
             swapper.SwitchPalette(palettes[_palletIndex]);
             init = false;
+        }
+
+        public void AnimationSwapPallet(int paletteId)
+        {
+            swapper.SwitchPalette(palettes[paletteId]);
         }
         
     }

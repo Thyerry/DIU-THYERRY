@@ -11,8 +11,6 @@ public class Combat : MonoBehaviour, IAnimatorController
 
     #region Animator Controllers
     private bool atkCombo01;
-    private bool atkCombo02;
-    private bool atkCombo03;
     private bool atkJump;
 
     #endregion
@@ -46,8 +44,6 @@ public class Combat : MonoBehaviour, IAnimatorController
     {
         clipInfos = animator.GetCurrentAnimatorClipInfo(0);
         atkCombo01 = false;
-        atkCombo02 = false;
-        atkCombo03 = false;
         atkJump = false;
     }
 
