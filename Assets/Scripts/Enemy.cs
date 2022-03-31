@@ -145,6 +145,7 @@ public class Enemy : Character
             state = States.patrol;
         }
     }
+    
     protected IEnumerator Attack()
     {
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);

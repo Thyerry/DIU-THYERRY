@@ -127,6 +127,7 @@ public class Movement : Character, IAnimatorController
     {
         specialActive = false;
     }
+    
     private void LimitsControl()
     {
         if (!isJumping)
